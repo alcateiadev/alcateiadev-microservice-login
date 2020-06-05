@@ -1,0 +1,36 @@
+security:
+  sessions: ALWAYS
+
+spring:
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost/micro_login
+    username: postgres
+    password: root
+
+  database:
+    driverClassName: org.postgresql.Driver
+
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: create-drop
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        hbm2ddl:
+          import_files: data.sql
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    show-sql: true
+
+zuul:
+  host:
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 60000
+  routes:
+    micro2:
+      path: /micro2/**
+      sensitiveHeaders:
+      url: http://localhost:8081
